@@ -40,7 +40,7 @@ while True:
             fps = 120
             piattaforma = Piattaforma(display)
             personaggio = Personaggio(screen, (300, 600), (150, 150))
-            # bg = sfondo(screen, ((400,300)), ((800, 600)))
+           
             while True:
     
                 
@@ -70,29 +70,13 @@ while True:
                 else:
                     personaggio.stop_moving_back()
         
-                # if personaggio.coll_right() == True:
-                #     bg.muove_bg_right()
-                # else:
-                #     bg.stop_moving_right()
-                # if personaggio.coll_right() == True:
-                #     bg.muove_bg_left()
-                # else:
-                #     bg.stop_moving_left()
-                # if personaggio.coll_foward() == True:
-                #     bg.muove_bg_foward()
-                # else:
-                #     bg.stop_moving_foward()
-                # if personaggio.coll_back() == True:
-                #     bg.muove_bg_foward()
-                # else:
-                #     bg.stop_moving_back()
+             
 
 
                     
                 screen.fill((69, 173, 75))
                 surf = pygame.transform.scale(display, WINDOW_SIZE)
                 screen.blit(surf, (0,0))
-                # bg.draw()
                 personaggio.muovi()
                 piattaforma.draw()
                 personaggio.draw()
@@ -112,22 +96,6 @@ while True:
 
 
 
-
-
-
-
-#             
-            
-#                 
-#     if keys[K_ESCAPE]:
-#         break
-#     #chiedi al prof come spawnare i cespulgi a caso
-              
-
-#     screen.fill((83, 160, 219))
-#     botton_title.draw()
-#     pygame.display.update()
-#     clock.tick(fps)
 
 
 
