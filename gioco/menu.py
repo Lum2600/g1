@@ -5,10 +5,10 @@ from plat import Piattaforma
 
 
 pygame.init()
-WINDOW_SIZE = (800, 600)
+WINDOW_SIZE = (1920, 1080)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption('Menu')
-display = pygame.Surface((900, 600)) 
+display = pygame.Surface((WINDOW_SIZE)) 
 
 clock = pygame.time.Clock()
 fps = 120
@@ -32,23 +32,26 @@ while True:
             sys.exit()
         if event.type == MOUSEBUTTONDOWN:
             pygame.init()
-            WINDOW_SIZE = (800, 600)
+            WINDOW_SIZE = (1920, 1080)
             screen = pygame.display.set_mode(WINDOW_SIZE)
             pygame.display.set_caption('Gioco')
 
             clock = pygame.time.Clock()
             fps = 120
             piattaforma = Piattaforma(display)
-            personaggio = Personaggio(screen, (300, 600), (150, 150))
-           
+            personaggio = Personaggio(screen, (300, 600), (150, 150), WINDOW_SIZE)
+            
+            
             while True:
-    
+                
                 
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         pygame.quit()
                         sys.exit()
                     
+                if personaggio.collide():
+                    display.move_sx()
 
                 keys = pygame.key.get_pressed()
                 if keys[K_BACKSPACE]:
@@ -69,6 +72,9 @@ while True:
                     personaggio.move_back() 
                 else:
                     personaggio.stop_moving_back()
+
+                
+                
         
              
 
@@ -76,8 +82,9 @@ while True:
                     
                 screen.fill((69, 173, 75))
                 surf = pygame.transform.scale(display, WINDOW_SIZE)
-                screen.blit(surf, (0,0))
+                screen.blit(display, (0,0))
                 personaggio.muovi()
+                personaggio.collide()
                 piattaforma.draw()
                 personaggio.draw()
                 
