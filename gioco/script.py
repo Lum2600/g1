@@ -2,7 +2,7 @@
 from typing import Any
 import pygame     
 class Personaggio:
-    def __init__(self, screen, pos, size, BG_SIZE ) -> None:
+    def __init__(self, screen, pos, size, plat ) -> None:
         self.screen = screen
         self.rect = pygame.Rect(pos[0], pos[1], size[0], size[1])
         self.image = pygame.image.load('git_hub\immagini\drago-removebg-preview - Copia.png')
@@ -13,8 +13,8 @@ class Personaggio:
         self.moving_right = False
         self.moving_left = False
         self.vel_vert = 10
-        self.vel_orizz = 10
-        
+        self.vel_orizz = 5
+        self.plat = plat
         
         
     
@@ -95,9 +95,18 @@ class Personaggio:
     def draw(self):
         self.screen.blit(self.image, self.rect)
         
-    def collide(self):
-        if self.rect.midright == 900:
+    def collide_sx(self):
+        
+        if self.rect.right >= 600:
             return True
+            
+        
+            
+            
+            
+            
+            
+            
         else:
             return False
         # if self.rect.collidepoint(-display_x):

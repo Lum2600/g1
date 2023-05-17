@@ -1,6 +1,8 @@
 import pygame
 from math import ceil
 
+
+
 class Piattaforma():
     def __init__(self, display, nomefile = 'git_hub\gioco\mappe\mappa1.txt') -> None:
         self.display = display
@@ -10,7 +12,7 @@ class Piattaforma():
         self.street_image_sx = pygame.image.load('git_hub\immagini\dirt_sx.jpeg')
         self.street_image_dx = pygame.image.load('git_hub\immagini\dirt_dx.jpeg')
         self.vel_vert = 10
-        self.vel_orizz = 10
+        self.vel_orizz = 1
         with open(nomefile) as f:
             self.game_map = [list(map(int, riga.strip().split())) for riga in f]
         self.num_rows = len(self.game_map)
@@ -45,4 +47,8 @@ class Piattaforma():
                     self.display.blit(self.street_image_sx, (x * self.tile_width, y * self.tile_height))   
 
     def move_sx(self):
-        self.display-=self.vel_orizz
+        
+            self.tile_rects.right-=self.vel_orizz   
+        
+        
+           
