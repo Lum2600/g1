@@ -1,6 +1,8 @@
 import pygame
 from typing import Any
+import sys
 from random import randint
+pygame.font.init()
 class Drago():
     def __init__(self, schermo, pos, size, screen):
         self.dragoRect = pygame.Rect(pos[0], pos[1], size[0], size[1])
@@ -12,8 +14,8 @@ class Drago():
         self.muovi_sinistra = False
         self.muovi_sopra = False
         self.muovi_sotto = False
-        self.vel_vert = 10
-        self.vel_orizz = 5
+        self.vel_vert = 1.7
+        self.vel_orizz = 1.7
           
     
         
@@ -38,7 +40,7 @@ class Drago():
         self.muovi_sopra = False
     def stop_moving_back(self):
         self.muovi_sotto = False
-
+    
     def muovimento(self):
         
         if self.muovi_destra:   
@@ -64,16 +66,73 @@ class Drago():
     
     def disegna(self):
         self.screen.blit(self.dragoimage, self.dragoRect)
+    def returna_rect(self):
+        return self.dragoRect
     
 
+def collisione_moneta1(moneta1, drago):
+    if drago.colliderect(moneta1):
+        return True
+    
+def collisione_moneta2(moneta2, drago):
+    if drago.colliderect(moneta2):
+        return True
+    
+def collisione_pokeball1(pokeball1, drago):
+    if pokeball1.colliderect(drago):
+        return True
+    
+def collisione_pokeball2(pokeball2, drago):
+    if drago.colliderect(pokeball2):
+        return True
+
+
+
+font = pygame.font.SysFont('Arial', 40)
+class Button():
+    def __init__(self,screen, x, y, width, height, buttonText='Button', cliccami=None, uno=False):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.cliccami = cliccami
+        self.uno = uno
+        self.schiacciato = False
+        self.screen = screen
+        self.image = pygame.image.load('image\lgo-removebg-preview.png')
+        self.image = pygame.transform.scale(self.image, (350, 150))
+        self.colora = {
+            'normale': '#ffffff',
+            'sopra mouse': '#666666',
+            'schiacciato': '#333333',
+        }
+        self.buttonSurface = pygame.Surface((self.width, self.height))
+        self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
+        self.bottoni = []
+        self.bottoni.append(self)
+    
 
         
-
-
-
-
-
-
-
-    
-
+    def cliccare(self):
+        mousePos = pygame.mouse.get_pos()
+        self.buttonSurface.fill(self.colora['normale'])
+        if self.buttonRect.collidepoint(mousePos):
+            self.buttonSurface.fill(self.colora['sopra mouse'])
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                self.buttonSurface.fill(self.colora['schiacciato'])
+                if self.uno:
+                    self.cliccami()
+                elif not self.schiacciato:
+                    self.cliccami()
+                    self.schiacciato = True
+            else:
+                self.schiacciato = False
+        self.buttonSurface.blit(self.buttonSurf, ((self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2), (self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2)))
+        self.screen.blit(self.buttonSurface, self.buttonRect)
+        self.screen.blit(self.image, (180, 100))
+    def action(self):
+        if self.schiacciato:
+            return "gioco"
+        else:
+            return "menu"
