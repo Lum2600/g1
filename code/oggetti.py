@@ -79,26 +79,16 @@ class Drago():
 
     
 
-def collisione_moneta1(moneta1, drago):
-    if drago.colliderect(moneta1):
+def collisione(oggetto, drago):
+    if drago.colliderect(oggetto):
         return True
     
-def collisione_moneta2(moneta2, drago):
-    if drago.colliderect(moneta2):
-        return True
-    
-def collisione_pokeball1(pokeball1, drago):
-    if pokeball1.colliderect(drago):
-        return True
-    
-def collisione_pokeball2(pokeball2, drago):
-    if drago.colliderect(pokeball2):
-        return True
 
 
 
-font = pygame.font.SysFont('Arial', 40)
-class Button():
+
+font = pygame.font.Font('image\Pokemon Classic.ttf', 25)
+class Button_start():
     def __init__(self,bg_color,screen, x, y, width, height, buttonText='Button', cliccami=None, uno=False):
         self.x = x
         self.y = y
@@ -113,8 +103,8 @@ class Button():
         self.image = pygame.transform.scale(self.image, (350, 150))
         self.colora = {
             'normale': self.bg_color,
-            'sopra mouse': '#666666',
-            'schiacciato': '#333333',
+            'sopra mouse': (240, 250, 247),
+            'schiacciato': (12, 194, 142),
         }
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
@@ -146,3 +136,52 @@ class Button():
             return True
     def logo(self):
         self.screen.blit(self.image, (180, 100))
+
+class Button_dif():
+    def __init__(self,screen, x, y, width, height, buttonText='Button', cliccami=None, uno=False):
+        self.x = x
+        self.y = y
+        self.modalita = "facile"
+        self.width = width
+        self.height = height
+        self.cliccato = cliccami
+        self.stai_cliccando = uno
+        self.schiacciato = False
+        self.screen = screen
+        self.image = pygame.image.load('image/lgo-removebg-preview.png')
+        self.image = pygame.transform.scale(self.image, (350, 150))
+        self.colora = {
+            'normale': (245, 245, 245),
+            'schiacciato': (12, 194, 142),
+            'bianco' : (245, 245, 245)
+        }
+        self.buttonSurface = pygame.Surface((self.width, self.height))
+        self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
+        self.bottoni = []
+        self.bottoni.append(self)
+    
+
+        
+    def cliccare(self, modalita):
+        click = 0
+        mousePos = pygame.mouse.get_pos()
+        self.buttonSurface.fill(self.colora['normale'])
+        if self.buttonRect.collidepoint(mousePos):
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                self.buttonSurface.fill(self.colora['schiacciato'])
+                self.schiacciato = True
+                
+                
+                
+            else:
+                self.schiacciato = False
+        
+                
+
+        self.buttonSurface.blit(self.buttonSurf, ((self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2), (self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2)))
+        self.screen.blit(self.buttonSurface, self.buttonRect)
+        
+    def action(self):
+        if self.schiacciato:
+            return True
