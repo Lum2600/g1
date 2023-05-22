@@ -52,8 +52,9 @@ skin = oggetti.Button(screen, 358, 390, 250, 80, 'skin', myFunction)
 dif_1 = oggetti.Button(screen, 205, 500, 100, 80, '1', myFunction)
 dif_2 = oggetti.Button(screen, 310, 500, 100, 80, '2', myFunction)
 dif_3 = oggetti.Button(screen, 415, 500, 100, 80, '3', myFunction)
+game_over = oggetti.Button(screen, 180, 500, 400, 100, 'Hai perso', myFunction)
 
-
+logo_image= pygame.image.load('g1/image/lgo-removebg-preview.png')
 num_collisioni = 0
 
 drago = oggetti.Drago(schermo, ((screen.get_width()//2), (schermo.get_height()//2)) , (140, 140), screen)
@@ -170,6 +171,7 @@ while True:
                     pygame.quit()
                     sys.exit()
             menu_screen.blit(sfondo_menu, (0,0))
+            screen.blit(logo_image, (180,100))
             start.cliccare()
             skin.cliccare()
             dif_1.cliccare()
@@ -189,6 +191,8 @@ while True:
                     sys.exit()
             game_over_screen.fill((0, 255, 0))
             game_over_screen.blit(sfondo_game_over, (0,0))
+            screen.blit(logo_image, (180,80))
+            game_over.cliccare()
             pygame.display.update()
             clock.tick(160)
 

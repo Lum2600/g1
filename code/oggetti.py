@@ -45,10 +45,12 @@ class Drago():
         
         if self.muovi_destra:   
             self.dragoRect.right += self.vel_orizz
+            
             if self.dragoRect.right > self.screen.get_width():
                 self.dragoRect.right = self.screen.get_width()
                
         if self.muovi_sinistra:
+            self.dragoimage = pygame.transform.flip(self.dragoimage, True, False)
             self.dragoRect.left -= self.vel_orizz
             if self.dragoRect.left < 0:
                 self.dragoRect.left = 0
@@ -63,7 +65,7 @@ class Drago():
             self.dragoRect.bottom += self.vel_vert
             if self.dragoRect.bottom > self.screen.get_height():
                 self.dragoRect.bottom = self.screen.get_height()
-    
+
     def disegna(self):
         self.screen.blit(self.dragoimage, self.dragoRect)
     def returna_rect(self):
@@ -130,9 +132,11 @@ class Button():
                 self.schiacciato = False
         self.buttonSurface.blit(self.buttonSurf, ((self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2), (self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2)))
         self.screen.blit(self.buttonSurface, self.buttonRect)
-        self.screen.blit(self.image, (180, 100))
+        
     def action(self):
         if self.schiacciato:
             return "gioco"
         else:
             return "menu"
+    def logo(self):
+        self.screen.blit(self.image, (180, 100))
