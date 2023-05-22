@@ -6,7 +6,7 @@ pygame.font.init()
 class Drago():
     def __init__(self, schermo, pos, size, screen):
         self.dragoRect = pygame.Rect(pos[0], pos[1], size[0], size[1])
-        self.dragoimage = pygame.image.load('image\drago-removebg-preview - Copia inv.png')
+        self.dragoimage = pygame.image.load('g1/image/drago-removebg-preview - Copia inv.png')
         self.dragoimage = pygame.transform.scale(self.dragoimage, size)
         self.schermo = schermo
         self.screen  = screen
@@ -99,7 +99,7 @@ class Button():
         self.uno = uno
         self.schiacciato = False
         self.screen = screen
-        self.image = pygame.image.load('image\lgo-removebg-preview.png')
+        self.image = pygame.image.load('g1/image/lgo-removebg-preview.png')
         self.image = pygame.transform.scale(self.image, (350, 150))
         self.colora = {
             'normale': '#ffffff',

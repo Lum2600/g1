@@ -6,42 +6,43 @@ pygame.init()
 pygame.font.init()
 WINDOW_SIZE = (720, 1080)
 screen = pygame.display.set_mode(WINDOW_SIZE)
+game_over_screen = pygame.display.set_mode(WINDOW_SIZE)
+
 pygame.display.set_caption('Menu')
 screen.fill((0, 200, 0))
 schermo = pygame.Surface((720, 1800))
 schermo.fill((0, 0, 200))
 vel_vert = 10
 vel_orizz = 5
-
 font = pygame.font.SysFont('Arial', 40)
+score = 0
 clock = pygame.time.Clock()
-sfondo = pygame.image.load('image\sfondoy.png')
+sfondo = pygame.image.load('g1/image/sfondoy.png')
 sfondo = pygame.transform.scale(sfondo, (720, 1080))
 fps = 160
 menu_screen = pygame.display.set_mode(WINDOW_SIZE)
-sfondo_menu = pygame.image.load('image\sfondoy.png')
+sfondo_menu = pygame.image.load('g1/image/sfondoy.png')
 sfondo_menu = pygame.transform.scale(sfondo, (720, 1080))
-
-
-
-vite_image = pygame.image.load('image\Vite.png')
+vite_image = pygame.image.load('g1/image/Vite.png')
 vite_rect = pygame.Rect((5, 5), (80, 80) )
 vite_image = pygame.transform.scale(vite_image, (80, 80))
-moneta_image1 = pygame.image.load('image\moneta-removebg-preview (1).png')
+moneta_image1 = pygame.image.load('g1/image/moneta-removebg-preview (1).png')
 moneta_rect1 = pygame.Rect((randint(0, 450), 0), (80, 80) )
 moneta_image1 = pygame.transform.scale(moneta_image1,(80, 80))
-moneta_image2 = pygame.image.load('image\moneta-removebg-preview (1).png')
+moneta_image2 = pygame.image.load('g1/image/moneta-removebg-preview (1).png')
 moneta_rect2 = pygame.Rect((randint(500, 630), -100), (80, 80) )
 moneta_image2 = pygame.transform.scale(moneta_image1,(80, 80))
-pokeball_image1 = pygame.image.load('image\pokeball.png')
-pokeball_image2 =pygame.image.load('image\pokeball.png')
+pokeball_image1 = pygame.image.load('g1/image/pokeball.png')
+pokeball_image2 =pygame.image.load('g1/image/pokeball.png')
 pokeball_rect1 = pygame.Rect((randint(0, 450), -100), (60, 50) )
 pokeball_rect2 = pygame.Rect((randint(500, 660), -100), (60, 50) )
 pokeball_image1 = pygame.transform.scale(pokeball_image1,(60, 50))
 pokeball_image2 = pygame.transform.scale(pokeball_image2,(60, 50))
 vel_pokeball = 1.8
 vel_monete = 2.2
-
+sfondo_game_over = pygame.image.load("g1/image/sfondoy.png")
+sfondo_game_over = pygame.transform.flip(sfondo_game_over, False, True)
+sfondo_game_over = pygame.transform.scale(sfondo_game_over, (720, 1080))
 def myFunction():
     print('Button Pressed')
 
@@ -123,10 +124,13 @@ while True:
             if oggetti.collisione_moneta1(moneta_rect1, oggetti.Drago.returna_rect(drago)):
                 moneta_rect1.y = randint(-800, 0)
                 moneta_rect1.x = randint(0, 450)
+                score +=10
         
             elif oggetti.collisione_moneta2(moneta_rect2, oggetti.Drago.returna_rect(drago)):
                 moneta_rect2.y = randint(-800, 0)
                 moneta_rect2.x = randint(500, 640)
+                score +=10
+        
         
             elif oggetti.collisione_pokeball1(pokeball_rect1, oggetti.Drago.returna_rect(drago)):
                 pokeball_rect1.y = randint(-800, 0)
@@ -147,12 +151,14 @@ while True:
             elif num_collisioni == 2:
                 screen.blit(vite_image, (5, 5))
             else:
-                variabile_di_stato = "menu"
-                if variabile_di_stato == "menu":
+                variabile_di_stato = "game_over"
+                if variabile_di_stato !="gioco":
                     break
 
             screen.blit(moneta_image1, moneta_rect1)
             screen.blit(moneta_image2, moneta_rect2)
+            score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+            screen.blit(score_text, (500, 10))
             screen.blit(pokeball_image1, pokeball_rect1)
             screen.blit(pokeball_image2, pokeball_rect2)   
             pygame.display.update()
@@ -163,8 +169,6 @@ while True:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-        
-        
             menu_screen.blit(sfondo_menu, (0,0))
             start.cliccare()
             skin.cliccare()
@@ -174,6 +178,17 @@ while True:
             variabile_di_stato = start.action()
             if variabile_di_stato ==  "gioco":
                 break
+            pygame.display.update()
+            clock.tick(160)
+            
+    elif variabile_di_stato=="game_over":
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            game_over_screen.fill((0, 255, 0))
+            game_over_screen.blit(sfondo_game_over, (0,0))
             pygame.display.update()
             clock.tick(160)
 
