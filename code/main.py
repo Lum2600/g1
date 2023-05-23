@@ -16,6 +16,14 @@ schermo = pygame.Surface((720, 1800))
 schermo.fill((0, 0, 200))
 sfondo = pygame.image.load('image\sfondoy.png')
 sfondo = pygame.transform.scale(sfondo, (720, 1080))
+sfondo_1 = pygame.image.load('image\sfondo_1.webp')
+sfondo_1 = pygame.transform.scale(sfondo_1, (720, 1080))
+sfondo_2 = pygame.image.load('image\sfono_2_2.png')
+sfondo_2 = pygame.transform.scale(sfondo_2, (720, 1080))
+sfondo_3 = pygame.image.load('image\sfondo_3.png')
+sfondo_3 = pygame.transform.rotate(sfondo_3, 90)
+sfondo_3 = pygame.transform.scale(sfondo_3, (720, 1080))
+
 #schermo del menu
 menu_screen = pygame.display.set_mode(WINDOW_SIZE)
 sfondo_menu = pygame.image.load('image/sfondoy.png')
@@ -70,14 +78,14 @@ moneta_rect4= pygame.Rect((randint(500, 630), -100), (80, 80) )
 moneta_image4 = pygame.transform.scale(moneta_image1,(80, 80))
 pokeball_image1 = pygame.image.load('image/pokeball.png')
 pokeball_image2 =pygame.image.load('image/pokeball.png')
-pokeball_rect1 = pygame.Rect((randint(0, 450), -100), (40, 40) )
-pokeball_rect2 = pygame.Rect((randint(500, 660), -100), (40, 40) )
+pokeball_rect1 = pygame.Rect((randint(0, 450), -100), (30, 30) )
+pokeball_rect2 = pygame.Rect((randint(500, 660), -100), (30, 30) )
 pokeball_image1 = pygame.transform.scale(pokeball_image1,(40, 40))
 pokeball_image2 = pygame.transform.scale(pokeball_image2,(40, 40))
 pokeball_image3 = pygame.image.load('image/pokeball.png')
 pokeball_image4 =pygame.image.load('image/pokeball.png')
-pokeball_rect3 = pygame.Rect((randint(0, 450), -100), (40, 40) )
-pokeball_rect4 = pygame.Rect((randint(500, 660), -100), (40, 40) )
+pokeball_rect3 = pygame.Rect((randint(0, 450), -100), (30, 30) )
+pokeball_rect4 = pygame.Rect((randint(500, 660), -100), (30, 30) )
 pokeball_image3 = pygame.transform.scale(pokeball_image3,(40, 40))
 pokeball_image4 = pygame.transform.scale(pokeball_image4,(40, 40))
 
@@ -157,6 +165,7 @@ while True:
     
     if variabile_di_stato =="gioco":
             pygame.mixer.Sound.stop(death_music)
+            pygame.mixer.music.pause()
             score = 0
             ost = pygame.mixer.music.load("image\X2Download.app - 1 Hour of Relaxing Pokemon HeartGold_SoulSilver Music Compilation (128 kbps).mp3")
             pygame.mixer.music.play(-1)
@@ -164,6 +173,7 @@ while True:
             run = True
             while run:
                 if modalita == "facile":
+                    pygame.mixer.music.unpause()
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             pygame.quit()
@@ -209,7 +219,7 @@ while True:
                     screen.fill((0, 200, 0))
                     screen.blit(schermo, ((screen.get_width()-schermo.get_width())//2, (screen.get_height()-schermo.get_height())//2 ))
                     schermo.fill((0, 0, 200))
-                    screen.blit(sfondo, (0, 0))
+                    screen.blit(sfondo_1, (0, 0))
                     drago.muovimento()
                     drago.disegna()
             
@@ -302,7 +312,7 @@ while True:
                         
                 
                     if variabile_di_stato !="gioco":
-                        pygame.mixer.Sound.set_volume(game_over_sound, 1.0)
+                        pygame.mixer.Sound.set_volume(game_over_sound, 0.5)
                         pygame.mixer.Sound.play(game_over_sound)
                         moneta_rect1.y = randint(-800, 0)
                         moneta_rect1.x = randint(0, 450)
@@ -336,14 +346,14 @@ while True:
                     clock.tick(160)
 
                 if modalita == "media":
-                      
+                    pygame.mixer.music.unpause()
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
                             pygame.quit()
                             sys.exit()
                         if event.type == TIMERSHOT:
                             score+=incremento_al_sec
-                            print("timer +")
+                            print("timer")
                 
                     
             
@@ -384,7 +394,7 @@ while True:
                     screen.fill((0, 200, 0))
                     screen.blit(schermo, ((screen.get_width()-schermo.get_width())//2, (screen.get_height()-schermo.get_height())//2 ))
                     schermo.fill((0, 0, 200))
-                    screen.blit(sfondo, (0, 0))
+                    screen.blit(sfondo_2, (0, 0))
                     drago.muovimento()
                     drago.disegna()
             
@@ -476,7 +486,7 @@ while True:
                         
                     
                     if variabile_di_stato !="gioco":
-                        pygame.mixer.Sound.set_volume(game_over_sound, 1.0)
+                        pygame.mixer.Sound.set_volume(game_over_sound, 0.5)
                         pygame.mixer.Sound.play(game_over_sound)
                         moneta_rect1.y = randint(-800, 0)
                         moneta_rect1.x = randint(0, 450)
@@ -509,6 +519,10 @@ while True:
                     pygame.display.update()
                     clock.tick(160)
                 if modalita == "difficile":
+                    
+                    
+
+                    
                     
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
@@ -557,7 +571,7 @@ while True:
                     screen.fill((0, 200, 0))
                     screen.blit(schermo, ((screen.get_width()-schermo.get_width())//2, (screen.get_height()-schermo.get_height())//2 ))
                     schermo.fill((0, 0, 200))
-                    screen.blit(sfondo, (0, 0))
+                    screen.blit(sfondo_3, (0, 0))
                     drago.muovimento()
                     drago.disegna()
             
@@ -603,31 +617,49 @@ while True:
 
 
                     if oggetti.collisione(moneta_rect1, oggetti.Drago.returna_rect(drago)):
+                        difficile = pygame.mixer.Sound('image\X2Download.app - Ding Sound Effect (128 kbps).mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         moneta_rect1.y = randint(-800, 0)
                         moneta_rect1.x = randint(0, 450)
                         score +=10
             
                     elif oggetti.collisione(moneta_rect2, oggetti.Drago.returna_rect(drago)):
+                        difficile = pygame.mixer.Sound('image\X2Download.app - Ding Sound Effect (128 kbps).mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         moneta_rect2.y = randint(-800, 0)
                         moneta_rect2.x = randint(500, 640)
                         score +=10
             
             
                     elif oggetti.collisione(pokeball_rect1, oggetti.Drago.returna_rect(drago)):
+                        difficile = pygame.mixer.Sound('image\X2downloadapp-super-effective-pokemon-sound-effects-128-kbps_yc7NsKAf.mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         pokeball_rect1.y = randint(-800, 0)
                         pokeball_rect1.x = randint(0, 450)
                         num_collisioni+=1
                     elif oggetti.collisione(pokeball_rect2, oggetti.Drago.returna_rect(drago)):
+                        difficile = pygame.mixer.Sound('image\X2downloadapp-super-effective-pokemon-sound-effects-128-kbps_yc7NsKAf.mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         pokeball_rect2.y = randint(-800, 0)
                         pokeball_rect2.x = randint(500, 640)
                         num_collisioni+=1
                     
                     elif oggetti.collisione(pokeball_rect3, oggetti.Drago.returna_rect(drago)):
                         pokeball_rect3.y = randint(-800, 0)
+                        difficile = pygame.mixer.Sound('image\X2downloadapp-super-effective-pokemon-sound-effects-128-kbps_yc7NsKAf.mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         pokeball_rect3.x = randint(0, 450)
                         num_collisioni+=1
             
                     elif oggetti.collisione(pokeball_rect4, oggetti.Drago.returna_rect(drago)):
+                        difficile = pygame.mixer.Sound('image\X2downloadapp-super-effective-pokemon-sound-effects-128-kbps_yc7NsKAf.mp3')
+                        pygame.mixer.Sound.set_volume(difficile, 1.0)
+                        pygame.mixer.Sound.play(difficile)
                         pokeball_rect4.y = randint(-800, 0)
                         pokeball_rect4.x = randint(500, 640)
                         num_collisioni+=1
@@ -643,13 +675,14 @@ while True:
                         screen.blit(vite_image, (5, 5))
                         screen.blit(vite_image, (85, 5))
                     elif num_collisioni == 2:
+                        
                         screen.blit(vite_image, (5, 5))
                     elif num_collisioni==3:
                         variabile_di_stato = "game_over"
                         
                     
                     if variabile_di_stato =="game_over":
-                        pygame.mixer.Sound.set_volume(game_over_sound, 1.0)
+                        pygame.mixer.Sound.set_volume(game_over_sound, 0.5)
                         pygame.mixer.Sound.play(game_over_sound)
                         moneta_rect1.y = randint(-800, 0)
                         moneta_rect1.x = randint(0, 450)
@@ -665,6 +698,12 @@ while True:
                         num_collisioni+=1
                         drago = oggetti.Drago(schermo, ((screen.get_width()//2), (schermo.get_height()//2)) , (140, 140), screen)
                         num_collisioni = 0
+                        moneta_rect1.y=randint(-800, 0)
+                        moneta_rect2.y=randint(-800, 0)
+                        pokeball_rect2.y=randint(-800, 0)
+                        pokeball_rect3.y=randint(-800, 0)
+                        pokeball_rect1.y=randint(-800, 0)
+                        pokeball_rect4.y=randint(-800, 0)
 
                         run = False
                         pygame.time.delay(1000)

@@ -1,2 +1,2 @@
 
-dif_2 = oggetti.Button(screen, 310, 500, 100, 80, '2', myFunction)
+sfondo_1 = pygame.image.load('image\sfondo_1.webp')
