@@ -402,6 +402,7 @@ while True:
                         pygame.mixer.Sound.set_volume(score_100, 0.1)
                         pygame.mixer.Sound.play(score_100)
 
+       
                 
 
                     moneta_rect1.y+=vel_monete
