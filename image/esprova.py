@@ -25,6 +25,8 @@ COIN6_VEL = 3
 # GRASS4_VEL = 3
 
 
+
+
 FOX_IMAGE = pygame.image.load(os.path.join('image', 'fox.png'))
 FOX = pygame.transform.rotate(pygame.transform.scale(FOX_IMAGE, (105, 105)), -5)
 
