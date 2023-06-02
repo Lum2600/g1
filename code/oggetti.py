@@ -3,10 +3,14 @@ from typing import Any
 import sys
 from random import randint
 pygame.font.init()
+
+vel_proiettile = 2
+font3 = pygame.font.Font('image\Pokemon Classic.ttf', 17)
 class Drago():
-    def __init__(self, schermo, pos, size, screen):
+    def __init__(self, schermo, pos, size, screen, pg_imm):
+        
         self.dragoRect = pygame.Rect(pos[0], pos[1], size[0], size[1])
-        self.dragoimage = pygame.image.load('image/drago-removebg-preview - Copia inv.png')
+        self.dragoimage = pg_imm
         self.dragoimage = pygame.transform.scale(self.dragoimage, size)
         self.schermo = schermo
         self.screen  = screen
@@ -45,12 +49,12 @@ class Drago():
         
         if self.muovi_destra:   
             self.dragoRect.right += self.vel_orizz
-            self.dragoimage = pygame.image.load('image/drago-removebg-preview - Copia inv.png')
+            self.dragoimage = self.dragoimage
             if self.dragoRect.right > self.screen.get_width():
                 self.dragoRect.right = self.screen.get_width()
                
         if self.muovi_sinistra:
-            self.dragoimage = pygame.image.load('image\drago-removebg-preview.png')
+            # self.dragoimage = pygame.image.load(self.dragoimage)
             self.dragoRect.left -= self.vel_orizz
             if self.dragoRect.left < 0:
                 self.dragoRect.left = 0
@@ -76,6 +80,14 @@ class Drago():
     def btg(self):
         self.vel_vert = 1.7
         self.vel_orizz = 1.7
+    def returna_center(self):
+        return self.dragoRect.center
+    
+
+
+        
+    
+        
 
     
 
@@ -99,7 +111,7 @@ class Button_start():
         self.stai_cliccando = uno
         self.schiacciato = False
         self.screen = screen
-        self.image = pygame.image.load('image/lgo-removebg-preview.png')
+        self.image = pygame.image.load('image\logo.png')
         self.image = pygame.transform.scale(self.image, (350, 150))
         self.colora = {
             'normale': self.bg_color,
@@ -148,7 +160,7 @@ class Button_dif():
         self.stai_cliccando = uno
         self.schiacciato = False
         self.screen = screen
-        self.image = pygame.image.load('image/lgo-removebg-preview.png')
+        self.image = pygame.image.load('image\logo.png')
         self.image = pygame.transform.scale(self.image, (350, 150))
         self.colora = {
             'normale': (245, 245, 245),
@@ -185,3 +197,53 @@ class Button_dif():
     def action(self):
         if self.schiacciato:
             return True
+
+
+class Button_skin():
+    def __init__(self,bg_color,screen, x, y, width, height, buttonText='Button', cliccami=None, uno=False):
+        self.x = x
+        self.y = y
+        self.bg_color=bg_color
+        self.width = width
+        self.height = height
+        self.cliccato = cliccami
+        self.stai_cliccando = uno
+        self.schiacciato = False
+        self.screen = screen
+        self.image = pygame.image.load('image\logo.png')
+        self.image = pygame.transform.scale(self.image, (350, 150))
+        self.colora = {
+            'normale': self.bg_color,
+            'sopra mouse': (240, 250, 247),
+            'schiacciato': (12, 194, 142),
+        }
+        self.buttonSurface = pygame.Surface((self.width, self.height))
+        self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.buttonSurf = font3.render(buttonText, True, (20, 20, 20))
+        self.bottoni = []
+        self.bottoni.append(self)
+    
+
+        
+    def cliccare(self):
+        mousePos = pygame.mouse.get_pos()
+        self.buttonSurface.fill(self.colora['normale'])
+        if self.buttonRect.collidepoint(mousePos):
+            self.buttonSurface.fill(self.colora['sopra mouse'])
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                self.buttonSurface.fill(self.colora['schiacciato'])
+                
+                self.schiacciato = True
+                self.cliccato()
+                
+            else:
+                self.schiacciato = False
+
+        self.buttonSurface.blit(self.buttonSurf, ((self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2), (self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2)))
+        self.screen.blit(self.buttonSurface, self.buttonRect)
+        
+    def action(self):
+        if self.schiacciato:
+            return True
+    def logo(self):
+        self.screen.blit(self.image, (180, 100))
