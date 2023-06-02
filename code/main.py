@@ -488,6 +488,8 @@ while True:
                         
                 
                     if variabile_di_stato !="gioco":
+                        variabile_di_stato = "game_over"
+                        
                         pygame.mixer.Sound.set_volume(game_over_sound, 0.5)
                         pygame.mixer.Sound.play(game_over_sound)
                         moneta_rect1.y = randint(-800, 0)
